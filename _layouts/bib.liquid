@@ -1,0 +1,102 @@
+---
+---
+<div class="row">
+  {% if site.enable_publication_thumbnails %}
+    <div class="col col-sm-4 abbr">
+      {% if entry.preview %}
+        {% if entry.preview contains '://' %}
+          <img class="preview z-depth-1 rounded" src="{{ entry.preview }}">
+        {% else %}
+          {% assign entry_path = entry.preview | prepend: '/assets/img/publication_preview/' %}
+          {%
+            include figure.liquid
+            loading="eager"
+            path=entry_path
+            sizes = "400px"
+            class="preview z-depth-1 rounded"
+            zoomable=true
+            avoid_scaling=true
+            alt=entry.preview
+          %}
+        {% endif %}
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <!-- Entry bib key -->
+  <div id="{{ entry.key }}" class="{% if site.enable_publication_thumbnails %}col-sm-8{% else %}col-sm-10{% endif %}">
+    <!-- Title -->
+    <div class="title">{{ entry.title }}</div>
+    <!-- Author -->
+    <div class="author">
+      {% for author in entry.author_array %}
+        {% assign author_is_self = false %}
+        {%- assign author_last_name = author.last | regex_replace: '[*∗†‡§¶‖&^]', '' -%}
+        {%- assign author_last_html = author.last | regex_replace: '([*∗†‡§¶‖&^]+)', '<sup>\1</sup>' -%}
+        {% if site.scholar.last_name contains author_last_name %}
+          {% if site.scholar.first_name contains author.first %}
+            {% assign author_is_self = true %}
+          {% endif %}
+        {%- endif -%}
+        {% assign coauthor_url = null %}
+        {%- assign clean_last_name = author_last_name | downcase | remove_accents -%}
+        {% if site.data.coauthors[clean_last_name] %}
+          {%- for coauthor in site.data.coauthors[clean_last_name] -%}
+            {% if coauthor.firstname contains author.first %}
+              {%- assign coauthor_url = coauthor.url -%}
+              {% break %}
+            {%- endif -%}
+          {% endfor %}
+        {%- endif -%}
+        {%- if forloop.first == false -%}, {% endif -%}
+        {%- if author_is_self -%}
+          <strong class="author-self">{{ author.first }} {{ author_last_html }}</strong>
+        {%- else -%}
+          {%- if coauthor_url -%}
+            <a href="{{ coauthor_url }}">{{ author.first }} {{ author_last_html }}</a>
+          {%- else -%}
+            {{ author.first }} {{ author_last_html }}
+          {% endif %}
+        {%- endif -%}
+      {% endfor %}
+    </div>
+
+    <!-- Venue chip + buttons -->
+    <div class="links">
+      {% if entry.abbr %}
+        {% assign venue_data = site.data.venues[entry.abbr] %}
+        {% assign venue_style = '' %}
+        {% if venue_data and venue_data.color %}
+          {% assign venue_style = venue_data.color | prepend: 'background-color:' %}
+        {% endif %}
+        {% if venue_data and venue_data.url %}
+          <a href="{{ venue_data.url }}" class="venue btn btn-sm z-depth-0" role="button" {% if venue_style != '' %}style="{{ venue_style }};color:#fff;border-color:transparent"{% endif %}>{{ entry.abbr }}</a>
+        {% else %}
+          <span class="venue btn btn-sm z-depth-0" {% if venue_style != '' %}style="{{ venue_style }};color:#fff;border-color:transparent"{% endif %}>{{ entry.abbr }}</span>
+        {% endif %}
+      {% endif %}
+      {% if entry.arxiv %}
+        <a href="http://arxiv.org/abs/{{ entry.arxiv }}" class="btn btn-sm z-depth-0" role="button">arXiv</a>
+      {% endif %}
+      {% if entry.code %}
+        <a href="{{ entry.code }}" class="btn btn-sm z-depth-0" role="button">Code</a>
+      {% endif %}
+      {% if entry.website %}
+        <a href="{{ entry.website }}" class="btn btn-sm z-depth-0" role="button">Website</a>
+      {% endif %}
+      {% if entry.pdf %}
+        {% if entry.pdf contains '://' %}
+          <a href="{{ entry.pdf }}" class="btn btn-sm z-depth-0" role="button">PDF</a>
+        {% else %}
+          <a href="{{ entry.pdf | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button">PDF</a>
+        {% endif %}
+      {% endif %}
+    </div>
+
+    {% if entry.abstract %}
+      <div class="abstract hidden">
+        <p>{{ entry.abstract }}</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
