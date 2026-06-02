@@ -29,3 +29,9 @@ I am a Ph.D. candidate at the [Taub Faculty of Computer Science](https://www.cs.
 Currently interning at Amazon Prime Video, focusing on using generative models for improved 3D reconstruction.
 
 My research focuses on efficiency and computer vision — from efficient training and inference of LLMs and VLMs, to 3D reconstruction and video diffusion.
+
+<h2 id="publications">Publications</h2>
+
+<div class="publications">
+{% bibliography %}
+</div>
