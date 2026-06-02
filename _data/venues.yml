@@ -1,6 +1,6 @@
 "ICLR 2026":
   url: https://iclr.cc/Conferences/2026
-  color: "#7b3fbf"
+  color: "#5a3eaf"
 
 "ICML 2024":
   url: https://icml.cc/Conferences/2024
@@ -12,4 +12,4 @@
 
 "NAACL 2025":
   url: https://2025.naacl.org/
-  color: "#3b6ec8"
+  color: "#5a3eaf"
