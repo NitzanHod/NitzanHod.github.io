@@ -1,3 +1,23 @@
 "schuster":
   - firstname: ["Assaf", "A."]
     url: https://scholar.google.com/citations?user=KfwgjswAAAAJ
+
+"amoyal":
+  - firstname: ["Roy", "R."]
+    url: https://scholar.google.com/citations?user=basR76gAAAAJ
+
+"fritz":
+  - firstname: ["Lior", "L."]
+    url: https://scholar.google.com/citations?user=tVSZmfgAAAAJ
+
+"ideses":
+  - firstname: ["Ianir", "I."]
+    url: https://scholar.google.com/citations?user=uOzy7KgAAAAJ
+
+"benaim":
+  - firstname: ["Sagie", "S."]
+    url: https://sagiebenaim.github.io/
+
+"efrat":
+  - firstname: ["Netalee", "N."]
+    url: https://scholar.google.com/citations?user=L0cJiRwAAAAJ
