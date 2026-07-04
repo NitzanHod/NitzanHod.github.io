@@ -72,7 +72,7 @@
         {% if venue_data and venue_data.url %}
           <a href="{{ venue_data.url }}" class="venue btn btn-sm z-depth-0" role="button" {% if venue_style != '' %}style="{{ venue_style }};color:#fff;border-color:transparent"{% endif %}>{{ entry.abbr }}</a>
         {% else %}
-          <span class="venue btn btn-sm z-depth-0" {% if venue_style != '' %}style="{{ venue_style }};color:#fff;border-color:transparent"{% endif %}>{{ entry.abbr }}</span>
+          <a class="venue btn btn-sm z-depth-0" role="button" {% if venue_style != '' %}style="{{ venue_style }};color:#fff;border-color:transparent"{% endif %}>{{ entry.abbr }}</a>
         {% endif %}
       {% endif %}
       {% if entry.arxiv %}
