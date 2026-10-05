@@ -25,6 +25,7 @@ al-folio v1 is a thin starter. Almost all rendering lives in versioned plugin ge
 | Site identity (name, url, description) | `_config.yml` (top section) |
 | Favicon (white "N" on `#11195c`) | `assets/img/favicon.ico`, referenced by `_config.yml` → `icon: favicon.ico` |
 | Footer row hidden | `_config.yml` → `footer_text` (inline `<style>` that hides the footer) |
+| Dark mode by default | `assets/js/theme.js` (local copy of the gem file, one-line change) |
 | Author-name highlighting in bib | `_config.yml` → `scholar.last_name: [Hodos]`, `scholar.first_name: [Nitzan, N.]` |
 | Show all authors (no "and N more" collapse) | `_config.yml` → `max_author_limit:` (blank) |
 | Disable demo blog/external posts in Cmd-K search | `_config.yml` → `posts_in_search: false`, `external_sources:` empty |
@@ -127,6 +128,7 @@ When in doubt: **prefer config + data + content edits over layout overrides**. E
 - **Venue chips include the presentation type** (`"ICLR 2026 (Poster)"`). Reason: uniform format once MACRO got a Spotlight and CompAct an Oral.
 - **Favicon is an image, not an emoji.** White Arial Bold "N" (cap height 136/256 px, centered) on solid `#11195c`, square — same style as the MACRO project page's "M". Multi-size `.ico` (16–256 px). `icon:` values longer than 4 characters are treated as a file in `assets/img/`.
 - **Footer row hidden.** The gem (`al_folio_core` `_includes/footer.liquid`) hard-codes the copyright line; rather than add another gem-file override (`_includes/footer.liquid`), `footer_text` injects `<style>footer[role="contentinfo"]{display:none}</style>`. The footer HTML is still emitted, just not displayed.
+- **Dark mode is the default.** `al_folio_core` hard-codes `"system"` as the fallback theme setting, with no config key. `assets/js/theme.js` is a local copy of the gem's file (al_folio_core **1.0.10**) with one line changed in `determineThemeSetting()` (fallback `"dark"`, marked with a comment); the site file shadows the gem asset. **When bumping `al_folio_core`, re-copy the new gem's `assets/js/theme.js` and re-apply that one line.** Note: theme.js saves the current setting to `localStorage` on every load, so visitors who came before this change keep `"system"`.
 
 ## Things to NEVER do without explicit user approval
 
