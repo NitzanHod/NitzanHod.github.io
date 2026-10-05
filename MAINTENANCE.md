@@ -22,7 +22,9 @@ al-folio v1 is a thin starter. Almost all rendering lives in versioned plugin ge
 
 | Concern | File |
 |---|---|
-| Site identity (name, url, description, favicon emoji) | `_config.yml` (top section) |
+| Site identity (name, url, description) | `_config.yml` (top section) |
+| Favicon (white "N" on `#11195c`) | `assets/img/favicon.ico`, referenced by `_config.yml` → `icon: favicon.ico` |
+| Footer row hidden | `_config.yml` → `footer_text` (inline `<style>` that hides the footer) |
 | Author-name highlighting in bib | `_config.yml` → `scholar.last_name: [Hodos]`, `scholar.first_name: [Nitzan, N.]` |
 | Show all authors (no "and N more" collapse) | `_config.yml` → `max_author_limit:` (blank) |
 | Disable demo blog/external posts in Cmd-K search | `_config.yml` → `posts_in_search: false`, `external_sources:` empty |
@@ -73,9 +75,9 @@ The user typically drops a paper PDF and a prepared figure at `~/Desktop/claude_
     canvas = Image.new('RGB', (new_w,new_h), (255,255,255)); canvas.paste(img, off)
     canvas.save(dst, 'PNG')
     ```
-    If the source is a PDF figure: `qlmanage -t -s 1600 -o . source.pdf` produces `source.pdf.png`.
-3. **Bib entry** — append to `_bibliography/papers.bib` as `@misc` (NOT `@inproceedings` — that triggers the "In <booktitle>, <year>" periodical line which we suppress). Required keys: `abbr` (matches a `_data/venues.yml` entry), `title`, `author`, `year`, `preview`, plus optional `arxiv`, `code`, `website`, `pdf`. Equal-contribution authors get an asterisk after the **last name** (`Hodos*, Nitzan`); the layout renders it as a superscript.
-4. **Venue chip** — if the venue isn't already in `_data/venues.yml`, add an entry. Use the existing **purple `#5a3eaf`** unless the user explicitly asks for a different color. Key must equal the bib `abbr` exactly (e.g., `"NeurIPS 2026"`).
+    If the source is a PDF figure: `qlmanage -t -s 1600 -o . source.pdf` produces `source.pdf.png` (macOS). On Windows, PyMuPDF in Anaconda works: render the page with `fitz` scaled to 1338 px wide and paste it centered on the 1418×1042 white canvas (40 px side margins).
+3. **Bib entry** — add to `_bibliography/papers.bib` as `@misc` (NOT `@inproceedings` — that triggers the "In <booktitle>, <year>" periodical line which we suppress). Required keys: `abbr` (matches a `_data/venues.yml` entry), `title`, `author`, `year`, `preview`, plus optional `arxiv`, `code`, `website`, `pdf`. Equal-contribution authors get an asterisk after the **last name** (`Hodos*, Nitzan`); the layout renders it as a superscript. **Order:** papers are grouped by year (newest first) and, within a year, shown in file order — keep the file chronological, newest at the top.
+4. **Venue chip** — `abbr` format is **`"<Conference> <Year> (<Type>)"`**, Type ∈ `Poster` / `Oral` / `Spotlight` (e.g., `"NeurIPS 2026 (Spotlight)"`, `"NAACL 2025 (Oral)"`, `"ICML 2024 (Poster)"`). Papers not yet accepted use `"Under Review, <Year>"`. If the chip text isn't already in `_data/venues.yml`, add an entry with the conference URL. Use the existing **purple `#5a3eaf`** unless the user explicitly asks for a different color. Key must equal the bib `abbr` exactly — otherwise the chip renders grey and unlinked.
 5. **Coauthor link** (optional) — to make a co-author's name a clickable link, add them to `_data/coauthors.yml`. Key is **lowercased last name without accents**; value is a list of `{firstname: [list], url: ...}` entries.
 6. Commit + push. Wait for the deploy and ask the user to hard-refresh.
 
@@ -122,6 +124,9 @@ When in doubt: **prefer config + data + content edits over layout overrides**. E
 - **Publications inlined on home page** under `<h2 id="publications">Publications</h2>`. The separate `/publications/` page also exists (with bib_search enabled). Navbar link goes to `/publications/`.
 - **All venue chips use one purple `#5a3eaf`.** Reason: a single conference shouldn't stand out by color.
 - **Image padding to 1.36:1.** Reason: paper figures vary widely in aspect; cfnn is the reference.
+- **Venue chips include the presentation type** (`"ICLR 2026 (Poster)"`). Reason: uniform format once MACRO got a Spotlight and CompAct an Oral.
+- **Favicon is an image, not an emoji.** White Arial Bold "N" (cap height 136/256 px, centered) on solid `#11195c`, square — same style as the MACRO project page's "M". Multi-size `.ico` (16–256 px). `icon:` values longer than 4 characters are treated as a file in `assets/img/`.
+- **Footer row hidden.** The gem (`al_folio_core` `_includes/footer.liquid`) hard-codes the copyright line; rather than add another gem-file override (`_includes/footer.liquid`), `footer_text` injects `<style>footer[role="contentinfo"]{display:none}</style>`. The footer HTML is still emitted, just not displayed.
 
 ## Things to NEVER do without explicit user approval
 

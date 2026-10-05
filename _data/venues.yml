@@ -1,18 +1,22 @@
 "Under Review, 2026":
   color: "#5a3eaf"
 
-"ICLR 2026":
+"NeurIPS 2026 (Spotlight)":
+  url: https://neurips.cc/Conferences/2026
+  color: "#5a3eaf"
+
+"ICLR 2026 (Poster)":
   url: https://iclr.cc/Conferences/2026
   color: "#5a3eaf"
 
-"ICML 2024":
+"ICML 2024 (Poster)":
   url: https://icml.cc/Conferences/2024
   color: "#5a3eaf"
 
-"ICML 2022":
+"ICML 2022 (Poster)":
   url: https://icml.cc/Conferences/2022
   color: "#5a3eaf"
 
-"NAACL 2025":
+"NAACL 2025 (Oral)":
   url: https://2025.naacl.org/
   color: "#5a3eaf"
